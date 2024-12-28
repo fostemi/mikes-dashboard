@@ -1,4 +1,4 @@
-module github.com/fostemi/dashboard
+module github.com/fostemi/mikes-dashboard
 
 go 1.22.5
 
