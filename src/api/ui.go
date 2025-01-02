@@ -32,7 +32,7 @@ func (m model) View() string {
   dashboard := lipgloss.JoinVertical(
 		lipgloss.Left,
 		titleStyle.Render(strings.Title(user) + "'s Dashboard"),
-		contentStyle.Render("Welcome to your Go-powered terminal dashboard!"),
+		contentStyle.Render("Welcome to your personal life dashboard!"),
     "Exit: ctrl+c or q",
   )
 
