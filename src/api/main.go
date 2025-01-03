@@ -1,13 +1,30 @@
 package main
 
 import (
-  "log"
-  tea "github.com/charmbracelet/bubbletea"
+  "fmt"
+  "os"
+  "flag"
+  "net/http"
+  "log/slog"
+)
+
+var (
+  addr = flag.String("addr", ":8080", "http service address")
 )
 
 func main() {
-  p := tea.NewProgram(model{})
-  if _, err := p.Run(); err != nil {
-    log.Fatalf("Error starting Bubble Tea form.")
-  }
+  flag.Parse()
+  logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
+
+  http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Welcome")
+    logger.Info("Response: ", slog.String("request", "/"), slog.Int("status", http.StatusOK))
+  })
+
+  http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+    fmt.Fprintf(w, "Healthy")
+    logger.Info("Response: ", slog.String("request", "/health"), slog.Int("status", http.StatusOK))
+  })
+
+  logger.Error("Server stopped", slog.Any("error", http.ListenAndServe(*addr, nil)))
 }
