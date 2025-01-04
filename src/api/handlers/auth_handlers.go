@@ -6,6 +6,7 @@ import (
 
   "github.com/fostemi/mikes-dashboard/models"
   "github.com/fostemi/mikes-dashboard/utils"
+  "github.com/fostemi/mikes-dashboard/db"
 
   "github.com/gin-gonic/gin"
 )
@@ -87,4 +88,36 @@ func FindUser(c *gin.Context) {
   }
 
   c.JSON(http.StatusOK, gin.H{"user": user})
+}
+
+func UpdateUser(c *gin.Context) {
+  var user models.User
+
+  if err := db.DB.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
+    return
+  }
+
+  var input models.User
+  if err := c.ShouldBindJSON(&input); err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+    return
+  }
+
+  if err := db.DB.Model(&user).Updates(input).Error; err != nil {
+    c.JSON(http.StatusInternalServerError, gin.H{"message": "Could not update user", "error": err.Error()})
+  }
+
+  c.JSON(http.StatusOK, gin.H{"message": "User updated", "user": user})
+}
+
+func DeleteUser(c *gin.Context) {
+  var user models.User
+
+  if err := db.DB.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
+    return
+  }
+  db.DB.Delete(&user)
+  c.JSON(http.StatusOK, gin.H{"message": "User deleted", "user": user})
 }
