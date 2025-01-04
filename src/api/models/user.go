@@ -2,6 +2,8 @@ package models
 
 import (
   "net/http"
+  "strings"
+  "html"
 
   "gorm.io/gorm"
   "github.com/gin-gonic/gin"
@@ -67,4 +69,16 @@ func (user *User) Create() (*User, error) {
   }
 
   return user, nil
+}
+
+func (user *User) BeforeCreate(*gorm.DB) error {
+  password, err := utils.HashPassword(user.Password)
+  if err != nil {
+    return err
+  }
+
+  user.Password = password
+
+  user.Username = html.EscapeString(strings.ToLower(user.Username))
+  return nil
 }
