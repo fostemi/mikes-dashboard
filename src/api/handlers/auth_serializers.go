@@ -34,9 +34,3 @@ func (request *SignupRequest) Validate() error{
 
   return nil
 }
-
-type Response struct {
-  Token string `json:"token" binding:"required"`
-  Msg string `json:"msg"`
-  User User `json:"user"`
-}

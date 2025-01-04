@@ -60,3 +60,11 @@ func GetUserByUsername(username string, sanitze bool) (User, error) {
 func (user *User) Sanitize() {
   user.Password = "++++++++"
 }
+
+func (user *User) Create() (*User, error) {
+  if err := db.DB.Create(&user).Error; err != nil {
+    return &User{}, err
+  }
+
+  return user, nil
+}
