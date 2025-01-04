@@ -11,6 +11,6 @@ var (
 func main() {
   flag.Parse()
 
-  r := engine()
+  r := Engine()
   r.Run(*addr)
 }

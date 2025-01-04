@@ -13,7 +13,7 @@ type User struct {
   gorm.Model
   ID uint `json:"id"`
   Username string `json:"username"`
-  Password string `json:"password"`
+  Password string `gorm:"type:varchar(60)" json:"password"`
   Email string `json:"email"`
 }
 

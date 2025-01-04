@@ -11,7 +11,7 @@ import (
   "github.com/gin-gonic/gin"
 )
 
-func engine() *gin.Engine {
+func Engine() *gin.Engine {
   r := gin.Default()
 
   db.InitDB()
@@ -36,6 +36,9 @@ func engine() *gin.Engine {
   publicRoute.POST("/register", handlers.Register)
 
   privateRoutes.Use(middleware.AuthenticationMiddleware())
+
+  privateRoutes.GET("/user", handlers.FindCurrentUser)
+  publicRoute.GET("/user/:id", handlers.FindUser)
 
   return r
 }

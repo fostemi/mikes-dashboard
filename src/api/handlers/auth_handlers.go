@@ -15,7 +15,7 @@ func Login(c *gin.Context) {
   var login LoginRequest
 
   if err := c.ShouldBindJSON(&login); err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
@@ -30,9 +30,8 @@ func Login(c *gin.Context) {
     return
   }
 
-  match := utils.CheckPasswordHash(login.Password, user.Password)
-  if !match {
-    c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
+  if err := utils.CheckPasswordHash(login.Password, user.Password); err != nil {
+    c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
     return
   }
 
@@ -50,7 +49,7 @@ func Register(c *gin.Context) {
   var signup SignupRequest
 
   if err := c.ShouldBindJSON(&signup); err != nil {
-    c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid data"})
+    c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
@@ -72,6 +71,15 @@ func Register(c *gin.Context) {
   }
 
   c.JSON(http.StatusCreated, gin.H{"message": "User registerd", "user": user, "token": token})
+}
+
+func FindCurrentUser(c *gin.Context) {
+  user, err := models.GetCurrentUser(c)
+  if err != nil {
+    c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
+  }
+
+  c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
 func FindUser(c *gin.Context) {
