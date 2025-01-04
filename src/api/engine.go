@@ -3,25 +3,39 @@ package main
 import (
   "net/http"
 
-  "github.com/fostemi/dashboard/middleware"
+  "github.com/fostemi/mikes-dashboard/middleware"
+  "github.com/fostemi/mikes-dashboard/handlers"
+  "github.com/fostemi/mikes-dashboard/models"
+  "github.com/fostemi/mikes-dashboard/db"
+
   "github.com/gin-gonic/gin"
 )
 
 func engine() *gin.Engine {
   r := gin.Default()
 
-  r.Use()
+  db.InitDB()
+  db.DB.AutoMigrate(&models.User{})
 
-  r.GET("/", func(c *gin.Context) {
+  publicRoute := r.Group("/api")
+  privateRoutes := r.Group("/api")
+
+
+  publicRoute.GET("/", func(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
       "message": "pong",
     })
   })
-  r.GET("/health", func(c *gin.Context) {
+  publicRoute.GET("/health", func(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
       "message": "healthz",
     })
   })
+
+  publicRoute.POST("/login", handlers.Login)
+  publicRoute.POST("/register", handlers.Register)
+
+  privateRoutes.Use(middleware.AuthenticationMiddleware())
 
   return r
 }
