@@ -10,5 +10,5 @@ import (
 func DailyAffirmation() *fyne.Container {
   // TODO: Call an API to get a random affirmation
   affirmation := data.GetAffirmation()
-  return container.NewVBox(widget.NewLabel(affirmation))
+  return container.NewVBox(widget.NewLabel("Affirmation of the Day: " + affirmation))
 }

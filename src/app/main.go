@@ -12,14 +12,18 @@ import (
 
 func main() {
   a := app.New()
+  a.Settings().SetTheme(&mikesTheme{})
   w := a.NewWindow("Mikes Dashboard")
 
+  // icon := fyne.NewStaticResource("icons/health.png", nil)
   tabs := container.NewAppTabs(
     container.NewTabItem("Home", pages.HomePage()),
+    // container.NewTabItemWithIcon("Health", icon, pages.HealthPage()),
     container.NewTabItem("Health", pages.HealthPage()),
     container.NewTabItem("Money", pages.MoneyPage()),
     container.NewTabItem("Schedule", pages.SchedulePage()),
   )
+  tabs.SetTabLocation(container.TabLocationLeading)
 
   w.SetMainMenu(fyne.NewMainMenu(
     fyne.NewMenu("Preferences", fyne.NewMenuItem("Preferences", func() {
