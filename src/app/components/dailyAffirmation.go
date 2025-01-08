@@ -1,6 +1,7 @@
 package components
 
 import (
+  "github.com/fostemi/mikes-dashboard/app/data"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
@@ -8,5 +9,6 @@ import (
 
 func DailyAffirmation() *fyne.Container {
   // TODO: Call an API to get a random affirmation
-  return container.NewVBox(widget.NewLabel("I am a winner!"))
+  affirmation := data.GetAffirmation()
+  return container.NewVBox(widget.NewLabel(affirmation))
 }

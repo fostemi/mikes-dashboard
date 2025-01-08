@@ -13,7 +13,7 @@ func HealthPage() *fyne.Container {
   var _ = widget.NewLabel("")
   dailyAffirmation := components.DailyAffirmation()
 
-  homeContent := container.New(layout.NewGridLayout(2), dailyAffirmation)
+  healthContent := container.New(layout.NewGridLayout(2), dailyAffirmation)
 
-  return homeContent
+  return healthContent
 }
