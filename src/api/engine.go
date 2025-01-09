@@ -33,7 +33,7 @@ func Engine() *gin.Engine {
   })
 
   publicRoute.POST("/login", handlers.Login)
-  publicRoute.POST("/register", handlers.Register)
+  publicRoute.POST("/signup", handlers.SignUp)
 
   privateRoutes.Use(middleware.AuthenticationMiddleware())
 

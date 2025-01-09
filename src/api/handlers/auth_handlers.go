@@ -45,7 +45,7 @@ func Login(c *gin.Context) {
   c.JSON(http.StatusOK, gin.H{"token": token, "msg": "Login successful", "user": user})
 }
 
-func Register(c *gin.Context) {
+func SignUp(c *gin.Context) {
   var signup SignupRequest
 
   if err := c.ShouldBindJSON(&signup); err != nil {
@@ -70,7 +70,7 @@ func Register(c *gin.Context) {
     return
   }
 
-  c.JSON(http.StatusCreated, gin.H{"message": "User registerd", "user": user, "token": token})
+  c.JSON(http.StatusCreated, gin.H{"message": "User Signed Up", "user": user, "token": token})
 }
 
 func FindCurrentUser(c *gin.Context) {
