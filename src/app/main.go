@@ -1,6 +1,9 @@
 package main
 
 import (
+  "log"
+  "net/http"
+
   "github.com/fostemi/mikes-dashboard/app/pages"
 
   "fyne.io/fyne/v2"
@@ -43,6 +46,13 @@ func main() {
       {Text: "SignIn", Widget: signinWidget},
     },
     OnSubmit: func() {
+      // test request
+      resp, err := http.Get("http://localhost:8080/api/")
+      if err != nil {
+        log.Fatalln(err)
+      }
+      log.Println(resp)
+
       // Authenticate
       // make sure user is authenticated
       // store JWT token
