@@ -12,6 +12,10 @@ import (
 
 func main() {
   a := app.New()
+  // Test a new signin feature
+  signinWindow := a.NewWindow("Sign In")
+  signinWidget := widget.NewEntry()
+
   a.Settings().SetTheme(&mikesTheme{})
   w := a.NewWindow("Mikes Dashboard")
 
@@ -32,6 +36,23 @@ func main() {
   ))
   w.SetContent(tabs)
   w.Resize(fyne.NewSize(700, 500))
+  w.SetMaster()
 
-  w.ShowAndRun()
+  form := &widget.Form{
+    Items: []*widget.FormItem{
+      {Text: "SignIn", Widget: signinWidget},
+    },
+    OnSubmit: func() {
+      // Authenticate
+      // make sure user is authenticated
+      // store JWT token
+      signinWindow.Close()
+      w.Show()
+    },
+  }
+  signinWindow.SetContent(form)
+  signinWindow.Resize(fyne.NewSize(650, 450))
+  signinWindow.Show()
+
+  a.Run()
 }
