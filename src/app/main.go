@@ -56,6 +56,11 @@ func main() {
       // Authenticate
       // make sure user is authenticated
       // store JWT token
+      // if token 
+      // signinWindow.Close()
+      // w.Show()
+      // else, 
+      // handle failed login
       signinWindow.Close()
       w.Show()
     },

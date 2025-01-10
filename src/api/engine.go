@@ -4,6 +4,7 @@ import (
   "net/http"
 
   "github.com/fostemi/mikes-dashboard/middleware"
+  goals "github.com/fostemi/mikes-dashboard/goals"
   "github.com/fostemi/mikes-dashboard/handlers"
   "github.com/fostemi/mikes-dashboard/models"
   "github.com/fostemi/mikes-dashboard/db"
@@ -39,6 +40,8 @@ func Engine() *gin.Engine {
 
   privateRoutes.GET("/user", handlers.FindCurrentUser)
   publicRoute.GET("/user/:id", handlers.FindUser)
+
+  privateRoutes.GET("/affirmation", goals.GetRandomAffirmation)
 
   return r
 }
