@@ -21,7 +21,6 @@ func Engine() *gin.Engine {
   publicRoutes := r.Group("/api")
   privateRoutes := r.Group("/api")
 
-
   publicRoutes.GET("/", func(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
       "message": "pong",
@@ -41,7 +40,7 @@ func Engine() *gin.Engine {
   privateRoutes.GET("/user", handlers.FindCurrentUser)
   publicRoutes.GET("/user/:id", handlers.FindUser)
 
-  publicRoutes.GET("/affirmation", goals.GetRandomAffirmation)
+  publicRoutes.GET("/affirmation", goals.GetAffirmation)
 
   return r
 }
