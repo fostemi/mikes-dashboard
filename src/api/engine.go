@@ -18,30 +18,30 @@ func Engine() *gin.Engine {
   db.InitDB()
   db.DB.AutoMigrate(&models.User{})
 
-  publicRoute := r.Group("/api")
+  publicRoutes := r.Group("/api")
   privateRoutes := r.Group("/api")
 
 
-  publicRoute.GET("/", func(c *gin.Context) {
+  publicRoutes.GET("/", func(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
       "message": "pong",
     })
   })
-  publicRoute.GET("/health", func(c *gin.Context) {
+  publicRoutes.GET("/health", func(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{
       "message": "healthz",
     })
   })
 
-  publicRoute.POST("/login", handlers.Login)
-  publicRoute.POST("/signup", handlers.SignUp)
+  publicRoutes.POST("/login", handlers.Login)
+  publicRoutes.POST("/signup", handlers.SignUp)
 
   privateRoutes.Use(middleware.AuthenticationMiddleware())
 
   privateRoutes.GET("/user", handlers.FindCurrentUser)
-  publicRoute.GET("/user/:id", handlers.FindUser)
+  publicRoutes.GET("/user/:id", handlers.FindUser)
 
-  privateRoutes.GET("/affirmation", goals.GetRandomAffirmation)
+  publicRoutes.GET("/affirmation", goals.GetRandomAffirmation)
 
   return r
 }

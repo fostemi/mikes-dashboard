@@ -47,7 +47,7 @@ func main() {
     },
     OnSubmit: func() {
       // test request
-      resp, err := http.Get("http://localhost:8080/api/")
+      resp, err := http.Get("http://localhost:8080/api/affirmation")
       if err != nil {
         log.Fatalln(err)
       }
@@ -61,7 +61,9 @@ func main() {
       // w.Show()
       // else, 
       // handle failed login
+      
       signinWindow.Close()
+      // setupWindow()
       w.Show()
     },
   }

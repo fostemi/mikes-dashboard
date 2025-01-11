@@ -1,8 +1,6 @@
 package pages
 
 import (
-  "github.com/fostemi/mikes-dashboard/app/components"
-
   "fyne.io/fyne/v2"
   "fyne.io/fyne/v2/widget"
   "fyne.io/fyne/v2/container"
@@ -11,9 +9,8 @@ import (
 
 func HealthPage() *fyne.Container {
   var _ = widget.NewLabel("")
-  dailyAffirmation := components.DailyAffirmation()
 
-  healthContent := container.New(layout.NewGridLayout(2), dailyAffirmation)
+  healthContent := container.New(layout.NewGridLayout(2))
 
   return healthContent
 }

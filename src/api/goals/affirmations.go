@@ -12,7 +12,8 @@ func getAffirmation() *models.Affirmation {
   return &affirmation
 }
 
+// /api/affirmation
 func GetRandomAffirmation(ctx *gin.Context)  {
-  ctx.JSON(http.StatusOK, gin.H{"msg": "Yup"})
+  ctx.JSON(http.StatusOK, gin.H{"affirmation": "Yup"})
 }
 
