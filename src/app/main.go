@@ -1,6 +1,8 @@
 package main
 
 import (
+  "net/http"
+
   "github.com/fostemi/mikes-dashboard/app/pages"
 
   "fyne.io/fyne/v2"
@@ -10,6 +12,8 @@ import (
 )
 
 func main() {
+  client := &http.Client{}
+
   a := app.New()
   // Test a new signin feature
   signinWindow := a.NewWindow("Sign In")
@@ -36,7 +40,7 @@ func main() {
   w.Resize(fyne.NewSize(700, 500))
   w.SetMaster()
 
-  signinWindow.SetContent(pages.SignInPage(signinWindow, w))
+  signinWindow.SetContent(pages.SignInPage(client, signinWindow, w))
   signinWindow.Resize(fyne.NewSize(650, 450))
   signinWindow.Show()
 

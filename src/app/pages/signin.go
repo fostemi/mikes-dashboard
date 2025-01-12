@@ -1,7 +1,8 @@
 package pages
 
 import (
-	"bytes"
+  "bytes"
+  "fmt"
 	"log"
 	"net/http"
 
@@ -14,11 +15,7 @@ type SignInForm struct {
   Password widget.Entry
 }
 
-func SignInPage(signinWindow, authenticatedWindow fyne.Window) *widget.Form {
-  body := []byte(`{
-    "username": "Post title",
-    "password": "Post description",
-    }`)
+func SignInPage(client *http.Client, signinWindow, authenticatedWindow fyne.Window) *widget.Form {
   var signin SignInForm
   return &widget.Form{
     Items: []*widget.FormItem{
@@ -26,12 +23,18 @@ func SignInPage(signinWindow, authenticatedWindow fyne.Window) *widget.Form {
       {Text: "Password", Widget: &signin.Password},
     },
     OnSubmit: func() {
-      resp, err := http.NewRequest("POST", "http://localhost:8080/api/login", bytes.NewBuffer(body))
+      body := []byte(fmt.Sprintf(`{
+        "username": %s,
+        "password": %s,
+        }`, signin.Username.Text, signin.Password.Text))
+      resp, err := http.Post("http://localhost:8080/api/login", "application/json", bytes.NewBuffer(body))
+      // req, err := http.NewRequest("POST", "http://localhost:8080/api/login", bytes.NewBuffer(body))
       if err != nil {
-        log.Fatalln(err)
+        log.Println("error", err)
       }
-      log.Println(resp)
-
+      // res, err := client.Do(req)
+      //
+      log.Println(resp.Body)
       // Authenticate
       // make sure user is authenticated
       // store JWT token
