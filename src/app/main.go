@@ -1,9 +1,6 @@
 package main
 
 import (
-  "log"
-  "net/http"
-
   "github.com/fostemi/mikes-dashboard/app/pages"
 
   "fyne.io/fyne/v2"
@@ -12,12 +9,10 @@ import (
   "fyne.io/fyne/v2/container"
 )
 
-
 func main() {
   a := app.New()
   // Test a new signin feature
   signinWindow := a.NewWindow("Sign In")
-  signinWidget := widget.NewEntry()
 
   a.Settings().SetTheme(&mikesTheme{})
   w := a.NewWindow("Mikes Dashboard")
@@ -41,33 +36,7 @@ func main() {
   w.Resize(fyne.NewSize(700, 500))
   w.SetMaster()
 
-  form := &widget.Form{
-    Items: []*widget.FormItem{
-      {Text: "SignIn", Widget: signinWidget},
-    },
-    OnSubmit: func() {
-      // test request
-      resp, err := http.Get("http://localhost:8080/api/affirmation")
-      if err != nil {
-        log.Fatalln(err)
-      }
-      log.Println(resp)
-
-      // Authenticate
-      // make sure user is authenticated
-      // store JWT token
-      // if token 
-      // signinWindow.Close()
-      // w.Show()
-      // else, 
-      // handle failed login
-      
-      signinWindow.Close()
-      // setupWindow()
-      w.Show()
-    },
-  }
-  signinWindow.SetContent(form)
+  signinWindow.SetContent(pages.SignInPage(signinWindow, w))
   signinWindow.Resize(fyne.NewSize(650, 450))
   signinWindow.Show()
 

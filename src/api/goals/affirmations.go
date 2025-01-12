@@ -18,7 +18,7 @@ func getRandomAffirmation() *models.Affirmation {
     {Affirmation: "My thoughts create my reality"},
     {Affirmation: "I believe in the law of attraction"},
     {Affirmation: "I have the power to manifest my dreams"},
-    models.Affirmation{Affirmation: "I believe deeply that I can achieve anything I desire"},
+    {Affirmation: "I believe deeply that I can achieve anything I desire"},
   }
 
   return &affirmations[rand.Intn(len(affirmations))]
