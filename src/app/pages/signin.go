@@ -1,52 +1,58 @@
 package pages
 
 import (
-  "bytes"
-  "fmt"
+	"bytes"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
+	"github.com/fostemi/mikes-dashboard/app/auth"
 )
 
-type SignInForm struct {
+type LogInForm struct {
   Username widget.Entry
   Password widget.Entry
 }
 
 func SignInPage(client *http.Client, signinWindow, authenticatedWindow fyne.Window) *widget.Form {
-  var signin SignInForm
+  var signin LogInForm
   return &widget.Form{
     Items: []*widget.FormItem{
       {Text: "Username", Widget: &signin.Username},
       {Text: "Password", Widget: &signin.Password},
     },
     OnSubmit: func() {
+      url := "http://localhost:8080/api/login"
       body := []byte(fmt.Sprintf(`{
-        "username": %s,
-        "password": %s,
-        }`, signin.Username.Text, signin.Password.Text))
-      resp, err := http.Post("http://localhost:8080/api/login", "application/json", bytes.NewBuffer(body))
-      // req, err := http.NewRequest("POST", "http://localhost:8080/api/login", bytes.NewBuffer(body))
+        "username": "%s",
+        "password": "%s"
+      }`, signin.Username.Text, signin.Password.Text))
+      resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
       if err != nil {
         log.Println("error", err)
       }
-      // res, err := client.Do(req)
-      //
-      log.Println(resp.Body)
-      // Authenticate
+
+      loginResponse := auth.LoginResponse{}
+      derr := json.NewDecoder(resp.Body).Decode(&loginResponse)
+      if derr != nil {
+        log.Println("Error: ", derr)
+      }
       // make sure user is authenticated
       // store JWT token
-      // if token 
+      if loginResponse.Token != "" {
+        signinWindow.Close()
+        authenticatedWindow.Show()
+      }
+
       // signinWindow.Close()
       // w.Show()
       // else, 
       // handle failed login
       
-      signinWindow.Close()
       // setupWindow()
-      authenticatedWindow.Show()
     },
   }
 }
