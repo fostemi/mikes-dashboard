@@ -30,29 +30,31 @@ func SignInPage(client *http.Client, signinWindow, authenticatedWindow fyne.Wind
         "username": "%s",
         "password": "%s"
       }`, signin.Username.Text, signin.Password.Text))
-      resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
-      if err != nil {
-        log.Println("error", err)
-      }
+      login(url, body)
 
-      loginResponse := auth.LoginResponse{}
-      derr := json.NewDecoder(resp.Body).Decode(&loginResponse)
-      if derr != nil {
-        log.Println("Error: ", derr)
-      }
-      // make sure user is authenticated
-      // store JWT token
-      if loginResponse.Token != "" {
-        signinWindow.Close()
-        authenticatedWindow.Show()
-      }
-
-      // signinWindow.Close()
-      // w.Show()
+      signinWindow.Close()
+      authenticatedWindow.Show()
       // else, 
       // handle failed login
       
       // setupWindow()
     },
+  }
+}
+
+func login(url string, body []byte) {
+  resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
+  if err != nil {
+    log.Println("error", err)
+  }
+
+  loginResponse := auth.LoginResponse{}
+  derr := json.NewDecoder(resp.Body).Decode(&loginResponse)
+  if derr != nil {
+    log.Println("Error: ", derr)
+  }
+  if loginResponse.Token == "" {
+    log.Println("Unable to login.")
+    login(url, body)
   }
 }
