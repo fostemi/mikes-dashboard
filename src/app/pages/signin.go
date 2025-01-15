@@ -19,7 +19,7 @@ type LogInForm struct {
 
 func SignInPage(client *http.Client, signinWindow, authenticatedWindow fyne.Window) *widget.Form {
   var signin LogInForm
-  return &widget.Form{
+  form := &widget.Form{
     Items: []*widget.FormItem{
       {Text: "Username", Widget: &signin.Username},
       {Text: "Password", Widget: &signin.Password},
@@ -30,31 +30,25 @@ func SignInPage(client *http.Client, signinWindow, authenticatedWindow fyne.Wind
         "username": "%s",
         "password": "%s"
       }`, signin.Username.Text, signin.Password.Text))
-      login(url, body)
 
-      signinWindow.Close()
-      authenticatedWindow.Show()
-      // else, 
-      // handle failed login
-      
-      // setupWindow()
+      resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
+      if err != nil {
+        log.Println("error", err)
+      }
+
+      loginResponse := auth.LoginResponse{}
+      derr := json.NewDecoder(resp.Body).Decode(&loginResponse)
+      if derr != nil {
+        log.Println("Error: ", derr)
+      }
+      if loginResponse.Token != "" {
+        signinWindow.Close()
+        authenticatedWindow.Show()
+      } else {
+        log.Println("Unable to login.")
+        signinWindow.Content().Refresh()
+      }
     },
   }
-}
-
-func login(url string, body []byte) {
-  resp, err := http.Post(url, "application/json", bytes.NewBuffer(body))
-  if err != nil {
-    log.Println("error", err)
-  }
-
-  loginResponse := auth.LoginResponse{}
-  derr := json.NewDecoder(resp.Body).Decode(&loginResponse)
-  if derr != nil {
-    log.Println("Error: ", derr)
-  }
-  if loginResponse.Token == "" {
-    log.Println("Unable to login.")
-    login(url, body)
-  }
+  return form
 }
