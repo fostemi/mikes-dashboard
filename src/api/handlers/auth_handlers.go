@@ -3,7 +3,6 @@ package handlers
 import (
   "net/http"
   "strconv"
-  "fmt"
 
   "github.com/fostemi/mikes-dashboard/models"
   "github.com/fostemi/mikes-dashboard/utils"
@@ -16,34 +15,28 @@ func Login(c *gin.Context) {
   var login LoginRequest
 
   if err := c.ShouldBindJSON(&login); err != nil {
-    fmt.Println(err)
-    fmt.Println("Binding JSON failure")
     c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
   if err := login.Validate(); err != nil {
-    fmt.Println("Error in validation")
     c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
     return
   }
 
   user, err := models.GetUserByUsername(login.Username, false)
   if err != nil {
-    fmt.Println("cannot find user")
     c.JSON(http.StatusBadRequest, gin.H{"error": "User not found"})
     return
   }
 
   if err := utils.CheckPasswordHash(login.Password, user.Password); err != nil {
-    fmt.Println("error checking password")
     c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
     return
   }
 
   token, err := utils.GenerateToken(user.ID)
   if err != nil {
-    fmt.Println("Cannot generate token")
     c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not generate token"})
     return
   }

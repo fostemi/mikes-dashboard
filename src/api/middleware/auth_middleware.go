@@ -2,9 +2,11 @@ package middleware
 
 import (
   "net/http"
+  "fmt"
   "strings"
   
   "github.com/fostemi/mikes-dashboard/utils"
+  "github.com/fostemi/mikes-dashboard/models"
 
   "github.com/gin-gonic/gin"
 )
@@ -19,8 +21,8 @@ func AuthenticationMiddleware() gin.HandlerFunc {
     }
   
     tokenParts := strings.Split(tokenString, " ")
-    if len(tokenParts) != 1 || tokenParts[0] != "Bearer" {
-      c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authentication token"})
+    if len(tokenParts) != 2 || tokenParts[0] != "Bearer" {
+      c.JSON(http.StatusUnauthorized, gin.H{"error": "Bearer not parsed correctly"})
       c.Abort()
       return
     }
@@ -29,7 +31,8 @@ func AuthenticationMiddleware() gin.HandlerFunc {
 
     claims, err := utils.VerifyToken(tokenString)
     if err != nil {
-      c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid authentication token"})
+      fmt.Println("error")
+      c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
       c.Abort()
       return
     }

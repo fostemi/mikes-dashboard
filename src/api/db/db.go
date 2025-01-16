@@ -37,7 +37,7 @@ func InitSQLite() {
   slog.Info("Initializing SQLite")
   db, err := gorm.Open(sqlite.Open("var/sqlite.db"), &gorm.Config{})
   if err != nil {
-    slog.Error("Error initializing SQLite: %v", err)
+    slog.Error(err.Error())
   }
   DB = db
 }

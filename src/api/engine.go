@@ -42,5 +42,15 @@ func Engine() *gin.Engine {
 
   publicRoutes.GET("/affirmation", goals.GetAffirmation)
 
+  // TODO: Implement following endpoints
+  // dailyGoals
+  privateRoutes.GET("/dailygoal", goals.GetDailyGoals)
+  // privateRoutes.POST("/dailygoal")
+  // privateRoutes.DELETE("/dailygoal")
+  // longtermGoals
+  // customWorkout
+  // budget
+  // schedule
+
   return r
 }
