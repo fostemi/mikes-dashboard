@@ -6,7 +6,6 @@ import (
   "strings"
   
   "github.com/fostemi/mikes-dashboard/utils"
-  "github.com/fostemi/mikes-dashboard/models"
 
   "github.com/gin-gonic/gin"
 )
