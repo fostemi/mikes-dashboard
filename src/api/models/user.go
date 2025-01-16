@@ -68,6 +68,14 @@ func (user *User) Create() (*User, error) {
     return &User{}, err
   }
 
+  userDailyGoals := DailyGoals{
+    User: *user,
+  }
+
+  if err := db.DB.Create(&userDailyGoals).Error; err != nil {
+    return user, err
+  }
+
   return user, nil
 }
 

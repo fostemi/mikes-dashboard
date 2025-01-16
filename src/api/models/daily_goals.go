@@ -13,7 +13,7 @@ type DailyGoals struct {
   DailyGoals []string `json:"dailyGoals"`
 }
 
-func GetCurrentUserDailyGoals(c *gin.Context) ([]string, error) {
+func GetCurrentUserDailyGoals(c *gin.Context) (*DailyGoals, error) {
   user, err := GetCurrentUser(c)
   if err != nil {
     return nil, err
@@ -21,7 +21,7 @@ func GetCurrentUserDailyGoals(c *gin.Context) ([]string, error) {
   var dailyGoals DailyGoals
   dailyGoals.GetDailyGoalsByUser(user)
 
-  return dailyGoals.DailyGoals, nil
+  return &dailyGoals, nil
 }
 
 func (dg *DailyGoals) GetDailyGoalsByUser(user User) (error) {
@@ -31,3 +31,9 @@ func (dg *DailyGoals) GetDailyGoalsByUser(user User) (error) {
   return nil
 }
 
+func (dg *DailyGoals) Create() (*DailyGoals, error) {
+  if err := db.DB.Create(&dg).Error; err != nil {
+    return &DailyGoals{}, err
+  }
+  return dg, nil
+}
