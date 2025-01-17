@@ -18,17 +18,21 @@ func GetCurrentUserDailyGoals(c *gin.Context) (*DailyGoals, error) {
   if err != nil {
     return nil, err
   }
-  var dailyGoals DailyGoals
-  dailyGoals.GetDailyGoalsByUser(user)
 
-  return &dailyGoals, nil
+  dailyGoals, err := GetDailyGoalsByUser(user)
+  if err != nil {
+    return nil, err
+  }
+
+  return dailyGoals, nil
 }
 
-func (dg *DailyGoals) GetDailyGoalsByUser(user User) (error) {
+func GetDailyGoalsByUser(user User) (*DailyGoals, error) {
+  var dg DailyGoals
   if err := db.DB.Where("user = ?", user).First(&dg).Error; err != nil {
-    return err
+    return nil, err
   }
-  return nil
+  return &dg, nil
 }
 
 func (dg *DailyGoals) Create() (*DailyGoals, error) {

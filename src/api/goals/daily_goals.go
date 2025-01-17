@@ -33,7 +33,6 @@ func PostDailyGoals(ctx *gin.Context) {
     return
   }
 
-
   // check if dailygoals exist
   // goals, err := models.GetCurrentUserDailyGoals(ctx)
   // if err != nil {
