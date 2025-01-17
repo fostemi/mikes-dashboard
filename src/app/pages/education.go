@@ -7,7 +7,7 @@ import (
   "fyne.io/fyne/v2/layout"
 )
 
-func SchedulePage() *fyne.Container {
+func EducationPage() *fyne.Container {
   var _ = widget.NewLabel("")
 
   scheduleContent := container.New(layout.NewGridLayout(2))

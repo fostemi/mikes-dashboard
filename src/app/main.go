@@ -1,18 +1,21 @@
 package main
 
 import (
-  "net/http"
+	"flag"
+	"net/http"
 
-  "github.com/fostemi/mikes-dashboard/app/pages"
+	"github.com/fostemi/mikes-dashboard/app/pages"
 
-  "fyne.io/fyne/v2"
-  "fyne.io/fyne/v2/app"
-  "fyne.io/fyne/v2/widget"
-  "fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
   client := &http.Client{}
+  devFlag := flag.Bool("dev", false, "Whether or not to run the signin window")
+  flag.Parse()
 
   a := app.New()
   // Test a new signin feature
@@ -40,9 +43,13 @@ func main() {
   w.Resize(fyne.NewSize(700, 500))
   w.SetMaster()
 
-  signinWindow.SetContent(pages.SignInPage(client, signinWindow, w))
-  signinWindow.Resize(fyne.NewSize(650, 450))
-  signinWindow.Show()
+  if (*devFlag) {
+    w.Show()
+  } else {
+    signinWindow.SetContent(pages.SignInPage(client, signinWindow, w))
+    signinWindow.Resize(fyne.NewSize(650, 450))
+    signinWindow.Show()
+  }
 
   a.Run()
 }
