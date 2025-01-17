@@ -13,12 +13,11 @@ import (
 func FinancesPage() *fyne.Container {
   var _ = widget.NewLabel("")
   // rgba(92, 179, 56, 1)
-  green := color.Color()
+  green := color.RGBA{92, 179, 56, 1}
 
-  budgetHealth := container.New(layout.NewHBoxLayout(), canvas.NewText("Budget Health", canvas.NewText("Healthy", green.RGBA)))
+  budgetHealth := container.New(layout.NewHBoxLayout(), canvas.NewText("Budget Health", color.White), layout.NewSpacer(), canvas.NewText("Healthy", green))
 
+  financeContent := container.New(layout.NewVBoxLayout(), budgetHealth)
 
-  moneyContent := container.New(layout.NewGridLayout(2))
-
-  return moneyContent
+  return financeContent
 }

@@ -28,9 +28,9 @@ func main() {
   tabs := container.NewAppTabs(
     container.NewTabItem("Home", pages.HomePage()),
     // container.NewTabItemWithIcon("Health", icon, pages.HealthPage()),
+    container.NewTabItem("Finances", pages.FinancesPage()),
     container.NewTabItem("Health", pages.HealthPage()),
-    container.NewTabItem("Money", pages.MoneyPage()),
-    container.NewTabItem("Schedule", pages.SchedulePage()),
+    container.NewTabItem("Education", pages.EducationPage()),
   )
   tabs.SetTabLocation(container.TabLocationLeading)
 
