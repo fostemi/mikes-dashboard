@@ -12,10 +12,23 @@ import (
 
 func FinancesPage() *fyne.Container {
   var _ = widget.NewLabel("")
+  tableData := [][]string{[]string{"Monthly Budget", "Actual Spend"}, []string{"$2,300", "$1,000"}}
 
   budgetHealth := container.New(layout.NewHBoxLayout(), canvas.NewText("Budget Health", color.White), layout.NewSpacer(), canvas.NewText("Healthy", color.White))
 
-  financeContent := container.New(layout.NewVBoxLayout(), budgetHealth)
+  table := widget.NewTable(
+    func() (int, int) {
+      return len(tableData), len(tableData[0])
+    },
+    func() fyne.CanvasObject {
+      return widget.NewLabel("Monthy Budget")
+    },
+    func(i widget.TableCellID, o fyne.CanvasObject) {
+      o.(*widget.Label).SetText(tableData[i.Row][i.Col])
+    },
+  )
+
+  financeContent := container.New(layout.NewVBoxLayout(), budgetHealth, table)
 
   return financeContent
 }
