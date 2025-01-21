@@ -8,8 +8,6 @@ import (
 )
 
 func HealthPage() *fyne.Container {
-  var _ = widget.NewLabel("")
-
   entry := widget.NewEntry()
   form := &widget.Form{
     Items: []*widget.FormItem{

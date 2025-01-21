@@ -11,7 +11,6 @@ import (
 )
 
 func FinancesPage() *fyne.Container {
-  var _ = widget.NewLabel("")
   tableData := [][]string{{"Monthly Budget", "Actual Spend"}, {"$2,300", "$1,000"}}
 
   budgetHealth := container.New(layout.NewHBoxLayout(), canvas.NewText("Budget Health", color.White), layout.NewSpacer(), canvas.NewText("Healthy", color.White))
