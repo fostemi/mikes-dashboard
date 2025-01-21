@@ -10,7 +10,18 @@ import (
 func HealthPage() *fyne.Container {
   var _ = widget.NewLabel("")
 
-  healthContent := container.New(layout.NewGridLayout(2))
+  entry := widget.NewEntry()
+  form := &widget.Form{
+    Items: []*widget.FormItem{
+      {Text: "What workout did you do today?", Widget: entry},
+    },
+    OnSubmit: healthPageSubmit(),
+  }
+  healthContent := container.New(layout.NewGridLayout(2), form)
 
   return healthContent
+}
+
+func healthPageSubmit() func() {
+  return func() {}
 }
