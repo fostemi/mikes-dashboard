@@ -5,12 +5,9 @@ import (
   "fmt"
 	"net/http"
 
-	"github.com/fostemi/mikes-dashboard/app/pages"
+	"github.com/fostemi/mikes-dashboard/app/windows"
 
-	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
 )
 
 var (
@@ -29,51 +26,22 @@ func main() {
   a := app.New()
   a.Settings().SetTheme(&mikesTheme{})
 
-  signinWindow := a.NewWindow("Sign In")
-  var w MainWindow
-  w.Window = a.NewWindow("Mikes Dashboard")
+  w := windows.MainWindow{
+    Window: a.NewWindow("Mikes Dashboard"),
+  }
   w.CreateMainWindow()
 
+  signin := windows.SignInWindow{
+    Window: a.NewWindow("Sign In"),
+    MainWindow: w.Window,
+    Client: client,
+  }
+
   if (*devFlag) {
-    w.Window.Show()
+    w.Show()
   } else {
-    signinWindow.SetContent(pages.SignInPage(client, signinWindow, w.Window))
-    signinWindow.Resize(fyne.NewSize(650, 450))
-    signinWindow.Show()
+    signin.Show()
   }
 
   a.Run()
-}
-
-type Window interface {
-  fyne.Window
-}
-type MainWindow struct {
-  Window fyne.Window
-}
-
-// func (w MainWindow) InitWindow() {
-//   w.Window = a.NewWindow("Mikes Dashboard")
-// }
-
-func (w MainWindow) CreateMainWindow() {
-  tabs := container.NewAppTabs(
-    container.NewTabItem("Home", pages.HomePage()),
-    // container.NewTabItemWithIcon("Health", icon, pages.HealthPage()),
-    container.NewTabItem("Finances", pages.FinancesPage()),
-    container.NewTabItem("Health", pages.HealthPage()),
-    container.NewTabItem("Education", pages.EducationPage()),
-  )
-  w.Window.SetMainMenu(fyne.NewMainMenu(
-    fyne.NewMenu("Preferences", fyne.NewMenuItem("Preferences", func() {
-      w.Window.SetContent(widget.NewLabel("Sign In"))
-    })),
-  ))
-  w.Window.SetContent(tabs)
-  w.Window.Resize(fyne.NewSize(700, 500))
-  w.Window.SetMaster()
-}
-
-func (w MainWindow) SetMainWindowName(name string) {
-  w.Window.SetTitle(name)
 }
