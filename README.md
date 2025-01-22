@@ -3,7 +3,7 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![Unlicense License][license-shield]][license-url]
-[![Twitter][twitter-shield]][twitter-url]
+[![X (formerly Twitter) URL][twitter-shield]][twitter-url]
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
