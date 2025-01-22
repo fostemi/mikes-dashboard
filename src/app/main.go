@@ -27,14 +27,11 @@ func main() {
   client := &http.Client{}
 
   a := app.New()
-  signinWindow := a.NewWindow("Sign In")
-
   a.Settings().SetTheme(&mikesTheme{})
+
+  signinWindow := a.NewWindow("Sign In")
   var w MainWindow
   w.Window = a.NewWindow("Mikes Dashboard")
-
-  // icon := fyne.NewStaticResource("icons/health.png", nil)
-
   w.CreateMainWindow()
 
   if (*devFlag) {
