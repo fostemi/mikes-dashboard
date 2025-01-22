@@ -2,9 +2,10 @@ package main
 
 import (
 	"flag"
-  "fmt"
+	"fmt"
 	"net/http"
 
+	"github.com/fostemi/mikes-dashboard/app/db"
 	"github.com/fostemi/mikes-dashboard/app/windows"
 
 	"fyne.io/fyne/v2/app"
@@ -22,6 +23,7 @@ func init() {
 
 func main() {
   client := &http.Client{}
+  db.InitDB()
 
   a := app.New()
   a.Settings().SetTheme(&mikesTheme{})
