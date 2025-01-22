@@ -57,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Mike's Life Coaching Dashboard][product-screenshot]](https://fosterdevops.pro)
 
 Everyone's life is different. To organize all that is going on in our life, it would be nice to have a dashboard that shows what we need to do and other stats in our life. I have set out to make an organization tool around the different facets I focus on.
 
@@ -67,9 +67,7 @@ Here's why:
 * An excercise to practice automating pieces of my life
 * It would be very enjoyable to have everything stored in a database to look back on things
 
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+There is no one-size fits all. As I develop this tool, I hope a community can adopt this and improve it and keep one another accountable!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -77,9 +75,9 @@ Use the `BLANK_README.md` to get started.
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * [![Go][Go]][Go-url]
+* Fyne
+* Google Cloud
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
