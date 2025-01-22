@@ -1,19 +1,14 @@
 package pages
 
 import (
-  "image/color"
-
 	"fyne.io/fyne/v2"
-	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
 func FinancesPage() *fyne.Container {
-  tableData := [][]string{{"Monthly Budget", "Actual Spend"}, {"$2,300", "$1,000"}}
-
-  budgetHealth := container.New(layout.NewHBoxLayout(), canvas.NewText("Budget Health", color.White), layout.NewSpacer(), canvas.NewText("Healthy", color.White))
+  tableData := [][]string{{"Budget Health", "Monthly Budget", "Actual Spend"}, {"Healthy", "$2,300", "$1,000"}}
 
   table := widget.NewTable(
     func() (int, int) {
@@ -27,7 +22,7 @@ func FinancesPage() *fyne.Container {
     },
   )
 
-  financeContent := container.New(layout.NewVBoxLayout(), budgetHealth, table)
+  financeContent := container.New(layout.NewStackLayout(), table)
 
   return financeContent
 }
