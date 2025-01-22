@@ -11,17 +11,18 @@ import (
   "fyne.io/fyne/v2/layout"
 )
 
-var data = []string{"Goal 1", "Goal 2", "Goal 3"}
+var yearlyGoals = []string{"Build Life Coach App", "Read 24 Books", "Leadville 100", "Two Certifications", "Build 2 Other Projects", "Save $3000"}
+var dailyGoals = []string{"Read Daily Stoic", "Morning Reflection", "Workout", "Read 100 Pages", "Make Dinner", "Evening Reflection", "Commit Code"}
 
 func HomePage() *fyne.Container {
-  yearlGoals := components.CheckList(data, widget.NewLabel("2025 Goals"))
-  dailyGoals := components.CheckList(data, widget.NewLabel("Daily Goals"))
+  yearlyGoalsChecklist := components.CheckList(yearlyGoals, widget.NewLabel("2025 Goals"))
+  dailyGoalsChecklist := components.CheckList(dailyGoals, widget.NewLabel("Daily Goals"))
   dailyAffirmation, err := components.DailyAffirmation()
   if err != nil {
     log.Fatalln("Error calling affirmation api", err)
   }
 
-  homeContent := container.New(layout.NewGridLayout(2), yearlGoals, dailyGoals, dailyAffirmation)
+  homeContent := container.New(layout.NewGridLayout(2), yearlyGoalsChecklist, dailyGoalsChecklist, dailyAffirmation)
 
   return homeContent
 }

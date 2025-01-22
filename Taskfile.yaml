@@ -1,0 +1,6 @@
+version: '3'
+
+tasks:
+  app.run.dev:
+    cmds:
+      - cd src/app; go run . --dev=true
