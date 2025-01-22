@@ -6,3 +6,6 @@ tasks:
       - cd src/app; go run . --dev=true
     aliases:
       - dev
+
+  api.run:
+    cmds: cd src/api; air
