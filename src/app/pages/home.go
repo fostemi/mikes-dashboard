@@ -11,7 +11,7 @@ import (
   "fyne.io/fyne/v2/layout"
 )
 
-var yearlyGoals = []string{"Build Life Coach App", "Read 24 Books", "Leadville 100", "Two Certifications", "Build 2 Other Projects", "Save $3000"}
+var yearlyGoals = []string{"Build Life Coach App", "Read 24 Books", "Leadville 100", "Two Certifications", "Build 1 Other Project", "Save $3000", "Build Blockchain Gambling Social Media"}
 var dailyGoals = []string{"Read Daily Stoic", "Morning Reflection", "Workout", "Read 100 Pages", "Make Dinner", "Evening Reflection", "Commit Code"}
 
 func HomePage() *fyne.Container {
