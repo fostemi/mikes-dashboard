@@ -19,7 +19,7 @@ func HomePage() *fyne.Container {
   dailyGoalsChecklist := components.CheckList(dailyGoals, widget.NewLabel("Daily Goals"))
   dailyAffirmation, err := components.DailyAffirmation()
   if err != nil {
-    log.Fatalln("Error calling affirmation api", err)
+    log.Fatalln("Error getting affirmations: ", err)
   }
 
   homeContent := container.New(layout.NewGridLayout(2), yearlyGoalsChecklist, dailyGoalsChecklist, dailyAffirmation)
