@@ -10,3 +10,7 @@ tasks:
   api.run:
     cmds: 
       - cd src/api; air
+
+  db.init:
+    cmds:
+      - cd src/app; mkdir var
