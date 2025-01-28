@@ -16,13 +16,14 @@ type MainWindow struct {
   Window fyne.Window
 }
 
-func (w MainWindow) CreateMainWindow() {
+func (w MainWindow) CreateMainWindow(a fyne.App) {
   tabs := container.NewAppTabs(
     container.NewTabItem("Home", pages.HomePage()),
     // container.NewTabItemWithIcon("Health", icon, pages.HealthPage()),
     container.NewTabItem("Finances", pages.FinancesPage()),
     container.NewTabItem("Health", pages.HealthPage()),
     container.NewTabItem("Education", pages.EducationPage()),
+    container.NewTabItem("Affirmations", pages.AffirmationsPage(a)),
   )
   w.Window.SetMainMenu(fyne.NewMainMenu(
     fyne.NewMenu("Preferences", fyne.NewMenuItem("Preferences", func() {

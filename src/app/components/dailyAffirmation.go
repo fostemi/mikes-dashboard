@@ -51,7 +51,7 @@ func getAffirmationByID(affirmationID uint) (Affirmation, error) {
   return affirmation, nil
 }
 
-func createAffirmation(msg string) (*Affirmation, error) {
+func CreateAffirmation(msg string) (*Affirmation, error) {
   affirmation := &Affirmation{Affirmation: msg}
   if err := db.DB.Create(&affirmation).Error; err != nil {
     return &Affirmation{}, err

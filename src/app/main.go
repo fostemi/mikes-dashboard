@@ -31,7 +31,7 @@ func main() {
   w := windows.MainWindow{
     Window: a.NewWindow("Mikes Dashboard"),
   }
-  w.CreateMainWindow()
+  w.CreateMainWindow(a)
 
   signin := windows.SignInWindow{
     Window: a.NewWindow("Sign In"),
